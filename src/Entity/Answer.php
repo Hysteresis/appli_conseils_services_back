@@ -17,21 +17,51 @@ class Answer
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $desciption = null;
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'answers')]
+    private ?Annonce $annonce = null;
+
+    #[ORM\ManyToOne(inversedBy: 'answerAd')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDesciption(): ?string
+    public function getDescription(): ?string
     {
-        return $this->desciption;
+        return $this->description;
     }
 
-    public function setDesciption(?string $desciption): static
+    public function setDescription(?string $description): static
     {
-        $this->desciption = $desciption;
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAnnonce(): ?Annonce
+    {
+        return $this->annonce;
+    }
+
+    public function setAnnonce(?Annonce $annonce): static
+    {
+        $this->annonce = $annonce;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

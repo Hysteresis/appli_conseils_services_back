@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AnnonceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +35,18 @@ class Annonce
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $salary = null;
+
+    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Answer::class)]
+    private Collection $answers;
+
+    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Job::class)]
+    private Collection $jobs;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,6 +121,66 @@ class Annonce
     public function setSalary(?string $salary): static
     {
         $this->salary = $salary;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): static
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): static
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getAnnonce() === $this) {
+                $answer->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Job>
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): static
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs->add($job);
+            $job->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): static
+    {
+        if ($this->jobs->removeElement($job)) {
+            // set the owning side to null (unless already changed)
+            if ($job->getAnnonce() === $this) {
+                $job->setAnnonce(null);
+            }
+        }
 
         return $this;
     }
