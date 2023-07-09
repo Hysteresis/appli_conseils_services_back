@@ -34,7 +34,7 @@ class AnswerFixtures extends Fixture implements DependentFixtureInterface
         return[
             
             UserFixtures::class,
-            AdFixtures::class,
+            AnnonceFixtures::class,
 
             ];
 }
