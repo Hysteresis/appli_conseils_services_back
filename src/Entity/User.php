@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -28,6 +30,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Answer::class)]
+    private Collection $answerAd;
+
+    public function __construct()
+    {
+        $this->answerAd = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,5 +107,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswerAd(): Collection
+    {
+        return $this->answerAd;
+    }
+
+    public function addAnswerAd(Answer $answerAd): static
+    {
+        if (!$this->answerAd->contains($answerAd)) {
+            $this->answerAd->add($answerAd);
+            $answerAd->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswerAd(Answer $answerAd): static
+    {
+        if ($this->answerAd->removeElement($answerAd)) {
+            // set the owning side to null (unless already changed)
+            if ($answerAd->getUser() === $this) {
+                $answerAd->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
