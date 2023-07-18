@@ -133,6 +133,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($answerAd->getUser() === $this) {
                 $answerAd->setUser(null);
+                
             }
         }
 
