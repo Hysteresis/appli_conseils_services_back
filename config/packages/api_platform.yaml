@@ -1,11 +1,8 @@
 api_platform:
-<<<<<<< HEAD
   mapping:
     paths: ['%kernel.project_dir%/src/Entity']
   patch_formats:
     json: ['application/merge-patch+json']
-=======
->>>>>>> 365287612e230db909576755fa6b97ba5b490a86
   swagger:
     versions: [3]
     api_keys:
@@ -13,8 +10,4 @@ api_platform:
         name: Auhtorization
         type: header
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 365287612e230db909576755fa6b97ba5b490a86
   show_webby: false
