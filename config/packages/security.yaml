@@ -26,7 +26,7 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
         login:
-            pattern: ^/api/login_check
+            pattern: ^/api/login
             stateless: true
             json_login:
                 check_path: /api/login_check
@@ -40,7 +40,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
         - { path: ^/api, roles: PUBLIC_ACCESS}
 
 when@test:
