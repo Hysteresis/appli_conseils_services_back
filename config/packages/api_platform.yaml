@@ -1,0 +1,9 @@
+api_platform:
+  swagger:
+    versions: [3]
+    api_keys:
+      jwt:
+        name: Auhtorization
+        type: header
+
+  show_webby: false
